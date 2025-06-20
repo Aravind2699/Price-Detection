@@ -73,7 +73,7 @@ def process_and_train(csv_path):
 
 # === 5. PREDICT NEW DATA ===
 def predict_new_data(new_data_path):
-    model = load('model_output/taxi_model_neural.joblib')
+    model = load('models/taxi_model_neural.joblib')
     new_data = pd.read_csv(new_data_path)
     new_data = add_features(new_data)
     X_new = new_data[['trip_distance', 'passenger_count', 'hour', 'dayofweek']]
@@ -98,7 +98,7 @@ def predict_single_sample(trip_distance, passenger_count, pickup_datetime):
 
 # === 7. RUN ===
 if __name__ == '__main__':
-    process_and_train('/home/aravind/aravind/ML_product/datasets/2023_Yellow_Taxi_Trip_Data.csv')  # You can replace with full dataset
+    # process_and_train('/home/aravind/aravind/ML_product/datasets/2023_Yellow_Taxi_Trip_Data.csv')  # You can replace with full dataset
     # predict_new_data('new_trip_data.csv')
     predict_single_sample(2.5, 1, '2023-05-01 18:30:00')
     # data_load_and_preprocess('/home/aravind/aravind/ML_product/datasets/2023_Yellow_Taxi_Trip_Data.csv')

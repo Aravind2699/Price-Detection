@@ -23,12 +23,12 @@ def process_and_train(csv_path):
     rmse = np.sqrt(mean_squared_error(y_test, y_pred))
     print(f"RMSE: {rmse:.2f}")
     os.makedirs('models', exist_ok=True)
-    dump(pipeline, 'git/models/taxi_model_neural.joblib')
-    print("Model saved to git/models/taxi_model_neural.joblib")
+    dump(pipeline, 'git/models/taxi_model.joblib')
+    print("Model saved to git/models/taxi_model.joblib")
 
 # === 5. PREDICT NEW DATA ===
 def predict_new_data(new_data_path):
-    model = load('git/models/taxi_model_neural.joblib')
+    model = load('git/models/taxi_model.joblib')
     new_data = pd.read_csv(new_data_path)
     new_data = add_features(new_data)
     X_new = new_data[['trip_distance', 'passenger_count', 'hour', 'dayofweek']]
@@ -40,7 +40,7 @@ def predict_new_data(new_data_path):
 # === 6. PREDICT SINGLE SAMPLE ===
 def predict_single_sample(trip_distance, passenger_count, pickup_datetime):
     print('predicting')
-    model = load('git/models/taxi_model_neural.joblib')
+    model = load('git/models/taxi_model.joblib')
     dt = pd.to_datetime(pickup_datetime)
     hour = dt.hour
     dayofweek = dt.dayofweek
@@ -54,4 +54,4 @@ def predict_single_sample(trip_distance, passenger_count, pickup_datetime):
 if __name__ == '__main__':
     # process_and_train('Drives/data/raw/2023_Yellow_Taxi_Trip_Data.csv')
     # predict_new_data('Drives/data/raw/new_trip_data.csv')
-    predict_single_sample(2.5, 1, '2023-05-01 18:30:00')
+    predict_single_sample(6.5, 2, datetime.datetime.now())

@@ -37,7 +37,7 @@ def predict_new_data(new_data_path):
     new_data.to_csv('models/predicted_fares.csv', index=False)
     print("Predictions saved to models/predicted_fares.csv")
 
-# === 6. PREDICT SINGLE SAMPLE ===
+# === 6. PREDICT SINGLE SAMPLE ===++++
 def predict_single_sample(trip_distance, passenger_count, pickup_datetime):
     print('predicting')
     model = load('git/models/taxi_model.joblib')

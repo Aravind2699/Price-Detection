@@ -10,6 +10,7 @@ from joblib import dump, load
 import os
 from sklearn.neural_network import MLPRegressor
 import datetime
+
 # === 1. CLEANING FUNCTION ===
 def clean_chunk(df):
     df = df.dropna(subset=['fare_amount', 'trip_distance', 'passenger_count'])
@@ -33,6 +34,7 @@ def build_pipeline():
     ])
     return pipeline
 
+# === 4. DATA LOADING AND PREPROCESSING ===
 def data_load_and_preprocess(csv_path):
     chunk_iter = pd.read_csv(csv_path, chunksize=100000)
     all_chunks = []
@@ -52,7 +54,8 @@ def data_load_and_preprocess(csv_path):
     print(data.shape)
 
     return data
-# === 4. MAIN TRAINING SCRIPT ===
+
+# === 5. MAIN TRAINING SCRIPT ===
 def process_and_train(csv_path):
     data=data_load_and_preprocess(csv_path)
     print('training')
@@ -73,7 +76,7 @@ def process_and_train(csv_path):
     print(datetime.datetime.now(),"completed training")
     print("Model saved to models/taxi_model_neural.joblib")
 
-# === 5. PREDICT NEW DATA ===
+# === 6. PREDICT NEW DATA ===
 def predict_new_data(new_data_path):
     model = load('git/models/taxi_model_neural.joblib')
     new_data = pd.read_csv(new_data_path)
@@ -84,7 +87,7 @@ def predict_new_data(new_data_path):
     new_data.to_csv('models/predicted_fares.csv', index=False)
     print("Predictions saved to models/predicted_fares.csv")
 
-# === 6. PREDICT SINGLE SAMPLE ===
+# === 7. PREDICT SINGLE SAMPLE ===
 def predict_single_sample(trip_distance, passenger_count, pickup_datetime):
     print('predicting')
     print(datetime.datetime.now(),"Started Predicting")
@@ -100,7 +103,7 @@ def predict_single_sample(trip_distance, passenger_count, pickup_datetime):
     
     return predicted_fare
 
-# === 7. RUN ===
+# === 8. RUN ===
 if __name__ == '__main__':
     print(datetime.datetime.now())
     # process_and_train('Drives/data/raw/2023_Yellow_Taxi_Trip_Data.csv')  # Updated to current data path

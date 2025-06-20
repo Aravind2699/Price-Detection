@@ -18,7 +18,7 @@ def add_features(df):
     df['dayofweek'] = df['pickup_datetime'].dt.dayofweek
     return df
 
-# === 3. DATA Visualization
+# === 3. DATA Visualization--
 def data_visualization(chunk):
         chunk=clean_chunk(chunk)
         chunk=add_features(chunk)
@@ -47,7 +47,7 @@ def data_visualization(chunk):
         sns.barplot(x=X.columns, y=importances)
         plt.show()
 
-# === 4. DATA LOADING AND PREPROCESSING ===
+# === 4. DATA LOADING AND PREPROCESSING ===--
 def data_load_and_preprocess(csv_path):
     chunk_iter = pd.read_csv(csv_path, chunksize=100000)
     all_chunks = []

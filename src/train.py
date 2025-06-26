@@ -44,10 +44,6 @@ def data_load_and_preprocess(csv_path):
         chunk = clean_chunk(chunk)
         chunk = add_features(chunk)
         all_chunks.append(chunk[['trip_distance', 'passenger_count', 'hour', 'dayofweek', 'fare_amount']])
-        if i==1 :
-            break
-
-
     data = pd.concat(all_chunks)
     print("Min:", data["fare_amount"].min())
     print("Max:", data["fare_amount"].max())
@@ -72,13 +68,13 @@ def process_and_train(csv_path):
     print(f"RMSE: {rmse:.2f}")
 
     os.makedirs('models', exist_ok=True)
-    dump(pipeline, 'git/models/taxi_model_neural.joblib')
+    dump(pipeline, 'git/models/taxi_model_neural_2.joblib')
     print(datetime.datetime.now(),"completed training")
-    print("Model saved to models/taxi_model_neural.joblib")
+    print("Model saved to models/taxi_model_neural_2.joblib")
 
 # === 6. PREDICT NEW DATA ===
 def predict_new_data(new_data_path):
-    model = load('git/models/taxi_model_neural.joblib')
+    model = load('git/models/taxi_model_neural_2.joblib')
     new_data = pd.read_csv(new_data_path)
     new_data = add_features(new_data)
     X_new = new_data[['trip_distance', 'passenger_count', 'hour', 'dayofweek']]
@@ -91,7 +87,7 @@ def predict_new_data(new_data_path):
 def predict_single_sample(trip_distance, passenger_count, pickup_datetime):
     print('predicting')
     print(datetime.datetime.now(),"Started Predicting")
-    model = load('git/models/taxi_model_neural.joblib')
+    model = load('git/models/taxi_model_neural_2.joblib')
     dt = pd.to_datetime(pickup_datetime)
     hour = dt.hour
     dayofweek = dt.dayofweek
@@ -106,7 +102,7 @@ def predict_single_sample(trip_distance, passenger_count, pickup_datetime):
 # === 8. RUN ===
 if __name__ == '__main__':
     print(datetime.datetime.now())
-    # process_and_train('Drives/data/raw/2023_Yellow_Taxi_Trip_Data.csv')  # Updated to current data path
+    process_and_train('Drives/data/raw/2023_Yellow_Taxi_Trip_Data.csv')  # Updated to current data path
     # predict_new_data('Drives/data/raw/new_trip_data.csv')
     predict_single_sample(2.5, 1, '2023-05-01 18:30:00')
     # data_load_and_preprocess('Drives/data/raw/2023_Yellow_Taxi_Trip_Data.csv')
